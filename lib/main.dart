@@ -25,8 +25,8 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.blueGrey,
-
         // For Android Studio Built in Colors
         title: const Text("Custom Text", style: TextStyle(
             color: Colors.purple,
@@ -109,7 +109,11 @@ class MyHome extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(child: Text("Making Drawer"),)
+      body: Center(child: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Text("Making Drawer")),)
     );
   }
 }

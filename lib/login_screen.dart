@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tts06c1/form_screen.dart';
 import 'package:tts06c1/main.dart';
+import 'package:tts06c1/reuseable_forms.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,58 +47,21 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: TextFormField(
-                  controller: userEmail,
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value == " ") {
-                      return "Please Enter Your Email";
-                    } else {
-                      return null;
-                    }
-                  },
-                  decoration: const InputDecoration(
-                      label: Text("Enter Your Email"),
-                      hintText: "johndoe@gmail.com",
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black, width: 4))),
-                ),
+              TayyabForm(
+                tayyabLabel: "Enter Your Email",
+                tayyabHintText: "joh@gmail.com",
+                tayyabFormError: "Email is Required",
+                tayyabController: userEmail,
+                tayyabFormIcon: Icon(Icons.email),
               ),
-                 Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: TextFormField(
-                  controller: userPass,
-                  obscureText: isHide == true ? true : false,
-                  obscuringCharacter: '-',
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value == " ") {
-                      return "Please Enter Your Password";
-                    }
-                    if (value.length < 6) {
-                      return "Password must be of 6 Digits or more";
-                    } else {
-                      return null;
-                    }
-                  },
-                  decoration: InputDecoration(
-                      label: const Text("Enter Your Password"),
-                      hintText: "Joh****n3",
-                      prefixIcon: const Icon(Icons.key),
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isHide = !isHide;
-                            });
-                          },
-                          icon: isHide == true
-                              ? const Icon(Icons.remove_red_eye)
-                              : const Icon(Icons.panorama_fish_eye)),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black, width: 4))),
-                ),
+              TayyabForm(
+                tayyabLabel: "Enter Your Password",
+                tayyabHintText: "asj^sdjkhf",
+                tayyabFormError: "Password is Required",
+                tayyabController: userPass,
+                tayyabFormIcon: Icon(Icons.key),
               ),
+
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -129,3 +93,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 }
+
+

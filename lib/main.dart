@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tts06c1/form_screen.dart';
+import 'package:tts06c1/gridview_screen.dart';
 import 'package:tts06c1/listview_screen.dart';
 import 'package:tts06c1/login_screen.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
 
       debugShowCheckedModeBanner: false,
-      home: ListScreen(),
+      home: GridScreen(),
     );
   }
 }

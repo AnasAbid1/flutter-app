@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tts06c1/API/apifetchscreen.dart';
 import 'package:tts06c1/form_screen.dart';
 import 'package:tts06c1/gridview_screen.dart';
 import 'package:tts06c1/listview_screen.dart';
@@ -14,10 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SecondHome(),
+      home: ApiFetch(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.dancingScriptTextTheme()
+      ),
     );
   }
 }

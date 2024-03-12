@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: ApiFetch(),
       theme: ThemeData(
-        textTheme: GoogleFonts.dancingScriptTextTheme()
+        textTheme: GoogleFonts.poppinsTextTheme()
       ),
     );
   }

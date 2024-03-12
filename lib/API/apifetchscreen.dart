@@ -33,7 +33,7 @@ class _ApiFetchState extends State<ApiFetch> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DescriptionScreen(movieID: "${myData[index]["name"]}"),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DescriptionScreen(movieID: "${myData[index]["id"]}"),));
 
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(

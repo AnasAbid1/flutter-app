@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tts06c1/API/api_services.dart';
 
@@ -29,8 +30,29 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                 Map map = jsonDecode(snapshot.data);
                 String movieDescription = map["tvShow"]["description"];
                 List movieGenres = map["tvShow"]["genres"];
+                List moviePictures = map["tvShow"]["pictures"];
                 return Column(
                   children: [
+
+                    CarouselSlider(
+                        items: List.generate(moviePictures.length, (index) => Container(
+                          width: double.infinity,
+                          height: 160,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage('${moviePictures[index]}'))
+                          ),
+                        ),),
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          viewportFraction: 1,
+                          scrollDirection: Axis.horizontal,
+                          height: 160
+                        )),
+
+
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.symmetric(horizontal: 10),

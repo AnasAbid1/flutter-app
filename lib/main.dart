@@ -1,13 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tts06c1/API/apifetchscreen.dart';
+import 'package:tts06c1/Firebase/Authentication/register_screen.dart';
+import 'package:tts06c1/firebase_options.dart';
 import 'package:tts06c1/form_screen.dart';
 import 'package:tts06c1/gridview_screen.dart';
 import 'package:tts06c1/listview_screen.dart';
 import 'package:tts06c1/login_screen.dart';
 import 'package:tts06c1/stack_screen.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const MyApp());
 }
 
@@ -18,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ApiFetch(),
+      home: RegisterScreen(),
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme()
       ),

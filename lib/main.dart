@@ -8,6 +8,7 @@ import 'package:tts06c1/form_screen.dart';
 import 'package:tts06c1/gridview_screen.dart';
 import 'package:tts06c1/listview_screen.dart';
 import 'package:tts06c1/login_screen.dart';
+import 'package:tts06c1/splash_screen.dart';
 import 'package:tts06c1/stack_screen.dart';
 
 void main() async{
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RegisterScreen(),
+      home: SplashScreen(),
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme()
       ),

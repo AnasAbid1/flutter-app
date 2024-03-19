@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tts06c1/Firebase/Authentication/register_screen.dart';
 import 'package:tts06c1/Firebase/Authentication/user_dashboard.dart';
 
@@ -25,6 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: userEmail.text,
           password: userPassword.text);
+      SharedPreferences userLogged = await SharedPreferences.getInstance();
+      userLogged.setString("userEmail", userEmail.text);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("SuccessFully")));
       Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashBoard(),));
     } on FirebaseAuthException catch(ex){

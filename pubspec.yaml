@@ -41,6 +41,8 @@ dependencies:
   firebase_core:
   firebase_auth:
   shared_preferences:
+  cloud_firestore:
+  uuid:
 
 dev_dependencies:
   flutter_test:

@@ -19,7 +19,9 @@ class _UserDashBoardState extends State<UserDashBoard> {
     await FirebaseAuth.instance.signOut();
     SharedPreferences userLogged = await SharedPreferences.getInstance();
     userLogged.clear();
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+    if(context.mounted){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen(),));
+    }
   }
 
   void userDelete()async{
@@ -28,9 +30,14 @@ class _UserDashBoardState extends State<UserDashBoard> {
       FirebaseAuth.instance.currentUser!.delete();
       SharedPreferences userLogged = await SharedPreferences.getInstance();
       userLogged.clear();
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+      if(context.mounted){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen(),));
+      }
+
     } on FirebaseAuthException catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.code.toString())));
+      if(context.mounted){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.code.toString())));
+      }
     }
   }
 
@@ -42,23 +49,23 @@ class _UserDashBoardState extends State<UserDashBoard> {
         actions: [
           IconButton(onPressed: (){
             userLogout();
-          }, icon: Icon(Icons.logout)),
+          }, icon: const Icon(Icons.logout)),
           IconButton(onPressed: (){
             userDelete();
-          }, icon: Icon(Icons.delete,color: Colors.red,))
+          }, icon: const Icon(Icons.delete,color: Colors.red,))
         ],
         automaticallyImplyLeading: false,
       ),
       body: ListTile(
-        title: Text("Sharaz"),
-        subtitle: Text("sharaz@gmail.com"),
+        title: const Text("Sharaz"),
+        subtitle: const Text("sharaz@gmail.com"),
         trailing: SizedBox(
           width: 140,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(onPressed: (){}, icon: Icon(Icons.update)),
-              IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,)),
+              IconButton(onPressed: (){}, icon: const Icon(Icons.update)),
+              IconButton(onPressed: (){}, icon: const Icon(Icons.delete,color: Colors.red,)),
             ],
           ),
         ),
@@ -75,13 +82,13 @@ class _UserDashBoardState extends State<UserDashBoard> {
               children: [
                 const SizedBox(height: 10,),
 
-                Text("Add New User",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 16),),
+                const Text("Add New User",style: TextStyle(fontWeight: FontWeight.w800,fontSize: 16),),
 
                 const SizedBox(height: 40,),
 
                 TextFormField(
                   controller: userName,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Enter Your Name",
                     prefixIcon: Icon(Icons.person)
                   ),
@@ -91,7 +98,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
 
                 TextFormField(
                   controller: userEmail,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       hintText: "Enter Your Email",
                       prefixIcon: Icon(Icons.email)
                   ),
@@ -109,26 +116,28 @@ class _UserDashBoardState extends State<UserDashBoard> {
                   // });
 
                   //Customer ID
-                  var userID = Uuid().v1();
+                  var userID = const Uuid().v1();
                   await FirebaseFirestore.instance.collection("userData").doc(userID).set({
                     "userID" : userID,
                     "userName" : userName.text,
                     "userEmail" : userEmail.text
                   });
 
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("user Added successfully")));
-                  Navigator.pop(context);
+                  if(context.mounted){
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("user Added successfully")));
+                    Navigator.pop(context);
+                  }
 
-                }, child: Text("Add User"))
+                }, child: const Text("Add User"))
 
               ],
             ),
           );
         },);
       },
+          backgroundColor: Colors.green,
           child: const Center(
-            child: Icon(Icons.add,color: Colors.white,),),
-          backgroundColor: Colors.green),
+            child: Icon(Icons.add,color: Colors.white,),)),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tts06c1/Firebase/Authentication/login_screen.dart';
+import 'package:tts06c1/Firebase/Authentication/update_screen.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -56,20 +57,62 @@ class _UserDashBoardState extends State<UserDashBoard> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: ListTile(
-        title: const Text("Sharaz"),
-        subtitle: const Text("sharaz@gmail.com"),
-        trailing: SizedBox(
-          width: 140,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(onPressed: (){}, icon: const Icon(Icons.update)),
-              IconButton(onPressed: (){}, icon: const Icon(Icons.delete,color: Colors.red,)),
-            ],
-          ),
-        ),
-      ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("userData").snapshots(),
+          builder: (context, snapshot) {
+            
+            
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child: CircularProgressIndicator(),);
+            }
+            
+            if(snapshot.hasData){
+
+              var dataLength = snapshot.data!.docs.length;
+
+            return dataLength != 0 ?ListView.builder(
+              itemCount: dataLength,
+              itemBuilder: (context, index) {
+                String userID = snapshot.data!.docs[index]["userID"];
+                String userName = snapshot.data!.docs[index]["userName"];
+                String userEmail = snapshot.data!.docs[index]["userEmail"];
+
+                return ListTile(
+                  title:  Text(userName),
+                  subtitle:  Text(userEmail),
+                  trailing: SizedBox(
+                    width: 140,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+
+                        IconButton(onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                            UpdateScreen(userID: userID, userName: userName, userEmail: userEmail)
+                            ,));
+                        }, icon: const Icon(Icons.update)),
+
+
+                        IconButton(onPressed: ()async{
+                          await FirebaseFirestore.instance.collection("userData").doc(userID).delete();
+                        }, icon: const Icon(Icons.delete,color: Colors.red,)),
+                      ],
+                    ),
+                  ),
+                );
+              },) : Center(child: Text("Nothing to show"),) ;
+            }
+            
+            if(snapshot.hasError){
+              return const Center(child: Icon(Icons.error,color: Colors.red,),);
+            }
+            
+            
+            
+            
+            
+            return Container();
+          },),
       floatingActionButton: FloatingActionButton(onPressed: (){
         showModalBottomSheet(context: context, builder: (context) {
 
